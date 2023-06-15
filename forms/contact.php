@@ -1,8 +1,6 @@
 <?php
 // Replace contact@example.com with your real receiving email address
-$receiving_email_address = 'shazebali26@gmail.com';
-
-$response_message = '';
+$receiving_email_address = 'your-email@example.com';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $name = $_POST['name'];
@@ -20,39 +18,35 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $is_sent = mail($receiving_email_address, $subject, $message, $headers);
 
   if ($is_sent) {
-    $response_message = 'Email sent successfully!';
+    echo 'Email sent successfully!';
   } else {
-    $response_message = 'Unable to send email. Please try again later.';
+    echo 'Unable to send email. Please try again later.';
   }
 }
 ?>
+<?php
+// Replace contact@example.com with your real receiving email address
+$receiving_email_address = 'shazebali767@gmail.com';
 
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Contact Form</title>
-</head>
-<body>
-  <h2>Contact Form</h2>
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  $name = $_POST['name'];
+  $email = $_POST['email'];
+  $subject = $_POST['subject'];
+  $message = $_POST['message'];
 
-  <form action="contact.php" method="post">
-    <label for="name">Name:</label><br>
-    <input type="text" id="name" name="name" required><br><br>
+  // Prepare email headers
+  $headers = "From: $name <$email>\r\n";
+  $headers .= "Reply-To: $email\r\n";
+  $headers .= "MIME-Version: 1.0\r\n";
+  $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
 
-    <label for="email">Email:</label><br>
-    <input type="email" id="email" name="email" required><br><br>
+  // Send email
+  $is_sent = mail($receiving_email_address, $subject, $message, $headers);
 
-    <label for="subject">Subject:</label><br>
-    <input type="text" id="subject" name="subject" required><br><br>
-
-    <label for="message">Message:</label><br>
-    <textarea id="message" name="message" rows="4" required></textarea><br><br>
-
-    <input type="submit" value="Submit">
-  </form>
-
-  <?php if (!empty($response_message)): ?>
-    <p><?php echo $response_message; ?></p>
-  <?php endif; ?>
-</body>
-</html>
+  if ($is_sent) {
+    echo 'Email sent successfully!';
+  } else {
+    echo 'Unable to send email. Please try again later.';
+  }
+}
+?>
